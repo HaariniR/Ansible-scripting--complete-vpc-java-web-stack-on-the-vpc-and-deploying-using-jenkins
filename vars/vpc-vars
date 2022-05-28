@@ -9,7 +9,7 @@ zone1: "us-east-1a"
 zone2: "us-east-1b"
 zone3: "us-east-1c"
 
-vpc_cidr: "172.20.0.0/24"
+vpc_cidr: "172.20.0.0/16"
 
 # subnet cidrs
 pubsubnet1: "172.20.1.0/24"

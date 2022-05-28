@@ -3,7 +3,7 @@
   gather_facts: False
   tasks:
     - name: Import all the variables
-      include_vars: vars/vpc_vars
+      include_vars: vars/vpc-vars
     - name: create a VPC with dedicated tenancy and a couple of tags
       ec2_vpc_net:
         name: "{{vpc_name}}"
@@ -16,31 +16,31 @@
       register: vpcout
     - name: Create public subnets
       ec2_vpc_subnet:
-        state: "{{state}}
-        region: "{{region_name}}
+        state: "{{state}}"
+        region: "{{region_name}}"
         az: "{{zone1}}"
-        vpc_id: "{{vpcout.vpc.id}}
-        cidr: "{{pubsubnet1}}
+        vpc_id: "{{vpcout.vpc.id}}"
+        cidr: "{{pubsubnet1}}"
         resource_tags:
           Name: "Public_sub-1"
       register: "subnetout"
     - name: Create public subnets
       ec2_vpc_subnet:
-        state: "{{state}}
-        region: "{{region_name}}
+        state: "{{state}}"
+        region: "{{region_name}}"
         az: "{{zone2}}"
-        vpc_id: "{{vpcout.vpc.id}}
-        cidr: "{{pubsubnet2}}
+        vpc_id: "{{vpcout.vpc.id}}"
+        cidr: "{{pubsubnet2}}"
         resource_tags:
           Name: "Public_sub-2"
-        register: "subnetout2"
+      register: "subnetout2"
     - name: Create public subnets
       ec2_vpc_subnet:
-        state: "{{state}}
-        region: "{{region_name}}
+        state: "{{state}}"
+        region: "{{region_name}}"
         az: "{{zone3}}"
-        vpc_id: "{{vpcout.vpc.id}}
-        cidr: "{{pubsubnet3}}
+        vpc_id: "{{vpcout.vpc.id}}"
+        cidr: "{{pubsubnet3}}"
         resource_tags:
           Name: "Public_sub-3"
-        register: "subnetout3"
+      register: "subnetout3"
