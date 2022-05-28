@@ -34,7 +34,7 @@
       register: sec_grp
 
     - name: create bashion hsot
-      ec2_instance:
+      ec2:
         key_name: bashion_keypair
         vpc_id: "{{vpc_id}}"
         region: "{{region}}"
