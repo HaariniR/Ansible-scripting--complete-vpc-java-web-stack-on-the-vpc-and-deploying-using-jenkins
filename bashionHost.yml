@@ -36,14 +36,13 @@
     - name: create bashion hsot
       ec2:
         key_name: bashion_keypair
-        vpc_id: "{{vpc_id}}"
         region: "{{region}}"
         vpc_subnet_id: "{{public_sub1}}"
         instance_type: t2.micro
         image: "{{ami_id}}"
         wait: yes
         wait_timeout: 300
-        tags:
+        instance_tags:
           Name: "Bashion"
         exact_count: 1
         count_tag:
