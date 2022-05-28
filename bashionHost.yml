@@ -3,7 +3,7 @@
   gather_facts: False
   tasks:
     - name: Import all the variables
-      include_vars: vars/vpc-vars
+      include_vars: vars/bashion_host
     - name: Import all out variables
       include_vars: vars/output_var
 
