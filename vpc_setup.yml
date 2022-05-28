@@ -44,3 +44,43 @@
         resource_tags:
           Name: "Public_sub-3"
       register: "subnetout3"
+    - name: Create public subnets
+      ec2_vpc_subnet:
+        state: "{{state}}"
+        region: "{{region_name}}"
+        az: "{{zone3}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        cidr: "{{pubsubnet3}}"
+        resource_tags:
+          Name: "Public_sub-3"
+      register: "subnetout3"
+    - name: Create private subnets
+      ec2_vpc_subnet:
+        state: "{{state}}"
+        region: "{{region_name}}"
+        az: "{{zone1}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        cidr: "{{privsubnet1}}"
+        resource_tags:
+          Name: "Priv_sub-1"
+        register: "privsubnetout1"
+  - name: Create private subnets
+      ec2_vpc_subnet:
+        state: "{{state}}"
+        region: "{{region_name}}"
+        az: "{{zone2}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        cidr: "{{privsubnet2}}"
+        resource_tags:
+          Name: "Priv_sub-2"
+        register: "privsubnetout2"
+  - name: Create private subnets
+      ec2_vpc_subnet:
+        state: "{{state}}"
+        region: "{{region_name}}"
+        az: "{{zone3}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        cidr: "{{privsubnet3}}"
+        resource_tags:
+          Name: "Priv_sub-3"
+        register: "privsubnetout3"
