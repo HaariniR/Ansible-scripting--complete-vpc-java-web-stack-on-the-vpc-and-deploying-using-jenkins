@@ -1,0 +1,54 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - name: Import all the variables
+      include_vars: vars/vpc-vars
+    - name: Import all out variables
+      include_vars: vars/output_var
+
+    - name: create ec2 key
+      ec2_key:
+        name: my_keypair
+      register: keyout
+
+    - name: create private key file
+      copy:
+        content: "{{keyout.key.private_key}}"
+        dest: "./bashion_keypair.pem"
+        mode: 0600
+      when: keyout.changed
+
+    - name: example ec2 group
+      ec2_group:
+        name: ec2-bashion
+        description: an example EC2 group
+        vpc_id: "{{vpc_id}}"
+        region: "{{region}}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: "{{MY_IP}}"
+      register: sec_grp
+
+    - name: create bashion hsot
+      ec2_instance:
+        key_name: bashion_keypair
+        vpc_id: "{{vpc_id}}"
+        region: "{{region}}"
+        vpc_subnet_id: "{{public_sub1}}"
+        instance_type: t2.micro
+        security_group: sec_grp
+        network:
+          assign_public_ip: true
+        image: "{{ami_id}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "Bashion"
+        exact_count: 1
+        count_tag:
+          Name: "Bashion"
+        group_id: "{{sec_grp.group_id}}"
+      register: bashion_host
