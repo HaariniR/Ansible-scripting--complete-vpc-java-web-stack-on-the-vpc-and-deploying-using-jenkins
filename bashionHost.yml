@@ -10,6 +10,7 @@
     - name: create ec2 key
       ec2_key:
         name: my_keypair
+        region: "{{region}}"
       register: keyout
 
     - name: create private key file
