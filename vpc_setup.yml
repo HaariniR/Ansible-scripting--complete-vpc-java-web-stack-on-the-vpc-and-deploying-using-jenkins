@@ -137,7 +137,7 @@
         - nat_igw.gateway_id
         - private_route_table.route_table
 
-    - set_facts:
+    - set_fact:
          vpc_id: "{{vpcout.vpc.id}}"
          public_sub1: "{{subnetout.subnet.id}}"
          public_sub2: "{{subnetout2.subnet.id}}"
