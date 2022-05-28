@@ -40,13 +40,10 @@
         region: "{{region}}"
         vpc_subnet_id: "{{public_sub1}}"
         instance_type: t2.micro
-        security_group: sec_grp
-        network:
-          assign_public_ip: true
         image: "{{ami_id}}"
         wait: yes
         wait_timeout: 300
-        instance_tags:
+        tags:
           Name: "Bashion"
         exact_count: 1
         count_tag:
