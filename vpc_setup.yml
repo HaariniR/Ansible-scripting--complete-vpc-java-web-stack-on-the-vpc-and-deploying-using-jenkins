@@ -1,0 +1,15 @@
+- host: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - name: Import all the variables
+      include_vars: vars
+    - name: create a VPC with dedicated tenancy and a couple of tags
+      ec2_vpc_net:
+        name: "{{vpc_name}}"
+        cidr_block: "{{vpc_cidr}}"
+        region: "{{region_name}}"
+        dns_support: yes
+        dns_hostnames: yes
+        state: "{{state}}"
+        tenancy: default
