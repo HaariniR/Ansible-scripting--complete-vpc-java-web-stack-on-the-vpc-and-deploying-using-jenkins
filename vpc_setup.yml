@@ -74,3 +74,26 @@
         resource_tags:
           Name: "Priv_sub-3"
       register: "privsubnetout3"
+
+    - name: Create internet gateway
+      ec2_vpc_igw:
+        vpc_id: "{{vpcout.vpc.id}}"
+        state: "{{state}}"
+        region: "{{region_name}}"
+        tags:
+          Name: "Vpc-igw"
+      register: igw
+    - name: Set up public subnet route table
+      ec2_vpc_route_table:
+        vpc_id: {{vpcout.vpc.id}}"
+        region: "{{region_name}}"
+        tags:
+          Name: "Vprofile-route"
+        subnets:
+          - "{{subnetout1.subnet.id}}"
+          - "{{subnetout2.subnet.id}}"
+          - "{{subnetout3.subnet_id}}"
+        routes:
+          - dest: 0.0.0.0/0
+        gateway_id: "{{Vpc-igw.gateway_id}}"
+      register: "public_route_table"
