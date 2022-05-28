@@ -1,0 +1,11 @@
+vpc_id: vpc-0ec50a30c9d85a389
+public_sub1: subnet-0b14804f884c66c15
+public_sub2: subnet-07bf7dcafb00b5ea1
+public_sub3: subnet-0872690c97b19022a
+private_sub1: subnet-03fb2222c396896c5
+private_sub2: subnet-047b4a3a6ccf938ca
+private_sub3: subnet-0321caddfabb4f719
+internet_gateway: igw-026d22b9515069758
+public_route: rtb-0ae2234d1be722e64
+nat_gateway: nat-01b70d0612b676c44
+private_route: rtb-00f4c45c40c42cd02
