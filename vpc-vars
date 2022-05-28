@@ -1,0 +1,22 @@
+#vpc names
+vpc_name: "vprofile-vpc"
+
+# regions
+region_name: "us-east-1"
+
+# az zones
+zone1: "us-east-1a"
+zone2: "us-east-1b"
+zone3: "us-east-1c"
+
+vpc_cidr: "172.20.0.0/24"
+
+# subnet cidrs
+pubsubnet1: 172.20.1.0/24
+pubsubnet2: 172.20.2.0/24
+pubsubnet3: 172.20.3.0/24
+privsubnet1: 172.20.4.0/24
+privsubnet2: 172.20.5.0/24
+privsubnet3: 172.20.6.0/24
+
+state: present
