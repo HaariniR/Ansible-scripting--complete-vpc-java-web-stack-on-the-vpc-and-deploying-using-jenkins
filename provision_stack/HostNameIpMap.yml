@@ -1,0 +1,16 @@
+---
+- name: host name and ip mapping
+  hosts: all
+  tasks:
+    - name: Import all the variables
+      include_vars: group_vars/hostips
+
+    - name: update the etc host file for all hosts
+      blockinfile:
+         path: /etc/hosts
+         block: |
+              web01
+              app01
+              rmq01
+              mc01
+              db01

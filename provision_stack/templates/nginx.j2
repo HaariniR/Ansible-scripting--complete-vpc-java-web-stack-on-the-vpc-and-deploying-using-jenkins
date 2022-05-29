@@ -1,0 +1,12 @@
+upstream vproapp {
+  server app01:8080;
+}
+
+server { # simple reverse-proxy
+    listen       80;
+
+    # pass requests for dynamic content to rails/turbogears/zope, et al
+    location / {
+      proxy_pass      http://vproapp;
+    }
+  }
