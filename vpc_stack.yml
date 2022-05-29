@@ -167,3 +167,59 @@
            - protocol: http # options are http, https, ssl, tcp
              load_balancer_port: 80
              instance_port: 80
+
+    - name: Insert/Update "Match User" configuration block in /etc/ssh/sshd_config
+      blockinfile:
+        path: provision_stack/group_vars/hostips
+        block: |
+          web01_private_ip: {{web01_instance.tagged_instances[0].private_ip}}
+          app01_private_ip: {{app01_instance.tagged_instances[0].private_ip}}
+          rmq01_private_ip: {{rmq01_instance.tagged_instances[0].private_ip}}
+          mc01_private_ip: {{mc01_instance.tagged_instances[0].private_ip}}
+          db01_private_ip: {{db01_instance.tagged_instances[0].private_ip}}
+
+    - name: copy ec2 instances login key pair
+      copy:
+        content: vpcstack_keypair.pem
+        dest: provision_stack/vpcstack_keypair.pem
+
+    - name: create inventory file with all hosts
+      blockinfile:
+        path: provision_stack/inventorypro
+        block: |
+           web01 ansible_host="{{web01_instance.tagged_instances[0].private_ip}}"
+           app01 ansible_host="{{app01_instance.tagged_instances[0].private_ip}}"
+           rmq01 ansible_host="{{rmq01_instance.tagged_instances[0].private_ip}}"
+           mc01  ansible_host="{{mc01_instance.tagged_instances[0].private_ip}}"
+           db01  ansible_host="{{db01_instance.tagged_instances[0].private_ip}}"
+           ctrl01 ansible_host=127.0.0.1 ansible_connection=local
+
+           [dbsrvgrp]
+           db01
+
+           [rmqsrvgrp]
+           rmq01
+
+           [mcsrvgrp]
+           mc01
+
+           [websrvgrp]
+           web01
+
+           [appsrvgrp]
+           app01
+
+           [ctrlgrp]
+           ctrl01
+
+           [stack_instance:children]
+           appsrvgrp
+           dbsrvgrp
+           rmqsrvgrp
+           mcsrvgrp
+           websrvgrp
+           ctrlgrp
+
+           [stack_instance:vars]
+           ansible_user=ubuntu
+           ansible_ssh_private_key_file=vpcstack_keypair.pem
