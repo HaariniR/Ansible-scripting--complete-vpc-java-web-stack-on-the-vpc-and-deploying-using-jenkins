@@ -134,7 +134,7 @@
       ec2:
         key_name: stack_keypair
         region: "{{region}}"
-        vpc_subnet_id: "{{privare_sub1}}"
+        vpc_subnet_id: "{{private_sub1}}"
         instance_type: t2.micro
         image: "{{mysql_ami}}"
         wait: yes
