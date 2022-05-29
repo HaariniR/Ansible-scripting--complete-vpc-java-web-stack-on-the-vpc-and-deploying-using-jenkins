@@ -119,7 +119,7 @@
            - "{{privsubnetout3.subnet.id}}"
         routes:
            - dest: 0.0.0.0/0
-             gateway_id: "nat_igw.nat_gateway_id"
+             gateway_id: "nat-04f4a0e5399fc5075"
       register: "private_route_table"
 
     - debug:
@@ -135,6 +135,7 @@
         - igw.gateway_id
         - public_route_table.route_table.id
         - private_route_table.route_table
+        - nat_igw
 
     - set_fact:
          vpc_id: "{{vpcout.vpc.id}}"
@@ -146,9 +147,9 @@
          private_sub3: "{{privsubnetout3.subnet.id}}"
          internet_gateway: "{{igw.gateway_id}}"
          public_route: "{{public_route_table.route_table.id}}"
-         nat_gateway: "{{nat_igw.nat_gateway_id}}"
+         nat_gateway: "nat-04f4a0e5399fc5075"
          private_route: "{{private_route_table.route_table.id}}"
     - name: copy a file
       copy:
-         content: "vpc_id: {{vpcout.vpc.id}}\nnat_gateway: {{nat_igw.nat_gateway_id}}\npublic_sub1: {{subnetout.subnet.id}}\npublic_sub2: {{subnetout2.subnet.id}}\npublic_sub3: {{subnetout3.subnet.id}}\nprivate_sub1: {{privsubnetout1.subnet.id}}\nprivate_sub2: {{privsubnetout2.subnet.id}}\nprivate_sub3: {{privsubnetout3.subnet.id}}\ninternet_gateway: {{igw.gateway_id}}\npublic_route: {{public_route_table.route_table.id}}\nnat_gateway: nat-01b70d0612b676c44\nprivate_route: {{private_route_table.route_table}}"
+         content: "vpc_id: {{vpcout.vpc.id}}\nnat_gateway: nat-04f4a0e5399fc5075\npublic_sub1: {{subnetout.subnet.id}}\npublic_sub2: {{subnetout2.subnet.id}}\npublic_sub3: {{subnetout3.subnet.id}}\nprivate_sub1: {{privsubnetout1.subnet.id}}\nprivate_sub2: {{privsubnetout2.subnet.id}}\nprivate_sub3: {{privsubnetout3.subnet.id}}\ninternet_gateway: {{igw.gateway_id}}\npublic_route: {{public_route_table.route_table.id}}\nnat_gateway: nat-01b70d0612b676c44\nprivate_route: {{private_route_table.route_table}}"
          dest: vars/output_var
