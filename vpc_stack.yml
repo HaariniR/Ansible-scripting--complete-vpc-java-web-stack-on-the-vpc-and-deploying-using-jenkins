@@ -34,5 +34,114 @@
              to_port: 80
              cidr_ip: 0.0.0.0/0
       register: elb_sec_grp
-    - debug:
-         var: elb_sec_grp
+
+    - name: create ec2 security group for instances
+      ec2_group:
+         name: ec2_sec
+         description: ec2 security group
+         vpc_id: "{{vpc_id}}"
+         region: "{{region}}"
+         rules:
+           - proto: tcp
+             from_port: 80
+             to_port: 80
+             group_id: "{{elb_sec_grp.group_id}}"
+           - proto: tcp
+             from_port: 22
+             to_port: 22
+             group_id: "{{bashionHost_grp}}"
+      register: ec2_sec_grp
+
+    - name: update ec2 security group for instances
+      ec2_group:
+         name: ec2_sec
+         vpc_id: "{{vpc_id}}"
+         region: "{{region}}"
+         rules:
+           - proto: all
+             group_id: "{{ec2_sec_grp.group_id}}"
+      register: ec2_sec_grp
+
+    - name: create ngninx instance
+      ec2:
+        key_name: stack_keypair
+        region: "{{region}}"
+        vpc_subnet_id: "{{privare_sub1}}"
+        instance_type: t2.micro
+        image: "{{nginx_ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "web01"
+        exact_count: 1
+        count_tag:
+          Name: "web01"
+        group_id: "{{ec2_sec_grp.group_id}}"
+      register: web01_instance
+
+    - name: create app instance
+      ec2:
+        key_name: stack_keypair
+        region: "{{region}}"
+        vpc_subnet_id: "{{privare_sub1}}"
+        instance_type: t2.micro
+        image: "{{tomcat_ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "app01"
+        exact_count: 1
+        count_tag:
+          Name: "app01"
+        group_id: "{{ec2_sec_grp.group_id}}"
+      register: app01_instance
+
+    - name: create rabbitmq instance
+      ec2:
+        key_name: stack_keypair
+        region: "{{region}}"
+        vpc_subnet_id: "{{privare_sub1}}"
+        instance_type: t2.micro
+        image: "{{rmq_ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "rmq01"
+        exact_count: 1
+        count_tag:
+          Name: "rmq01"
+        group_id: "{{ec2_sec_grp.group_id}}"
+      register: rmq01_instance
+    - name: create memcache instance
+      ec2:
+        key_name: stack_keypair
+        region: "{{region}}"
+        vpc_subnet_id: "{{privare_sub1}}"
+        instance_type: t2.micro
+        image: "{{memcache_ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "mc01"
+        exact_count: 1
+        count_tag:
+          Name: "mc01"
+        group_id: "{{ec2_sec_grp.group_id}}"
+      register: mc01_instance
+
+    - name: create mysql instance
+      ec2:
+        key_name: stack_keypair
+        region: "{{region}}"
+        vpc_subnet_id: "{{privare_sub1}}"
+        instance_type: t2.micro
+        image: "{{mysql_ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "db01"
+        exact_count: 1
+        count_tag:
+          Name: "db01"
+        group_id: "{{ec2_sec_grp.group_id}}"
+      register: db01_instance

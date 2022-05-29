@@ -47,3 +47,9 @@
           Name: "Bashion"
         group_id: "{{sec_grp.group_id}}"
       register: bashion_host
+
+    - name: Insert/Update "bashion host sec group id" configuration block in /vars/output_var
+      blockinfile:
+        path: /vars/output_var
+        block: |
+          bashionHost_grp: "{{sec_grp.group_id}}"
