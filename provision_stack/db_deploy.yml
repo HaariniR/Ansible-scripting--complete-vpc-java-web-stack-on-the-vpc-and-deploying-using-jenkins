@@ -9,14 +9,14 @@
     - name: copy sql file from local to remote
       copy:
         src: file/db_backup.sql
-        dest: tmp/db_backup.sql
+        dest: /tmp/db_backup.sql
 
     - name: deploy to the my sql databse
       mysql_db:
         name: "{{db_name}}"
         state: import
         login_user: "{{db_user}}"
-        login_password: "{{db_password}}"
+        login_password: "{{db_pass}}"
         target: /tmp/db_backup.sql
       notify:
         - restartmysql

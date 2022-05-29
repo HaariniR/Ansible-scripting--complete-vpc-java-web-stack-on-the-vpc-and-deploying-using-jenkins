@@ -5,7 +5,7 @@
   tasks:
     - name: install required packages
       apt:
-        name: {{item}}
+        name: "{{item}}"
         state: present
       loop:
         - maven
@@ -15,11 +15,12 @@
     - name: clone from a git repository
       git:
          repo: https://github.com/devopshydclub/vprofile-project.git
-         dest: provision_stack/vprofile-repo
+         dest: ./vprofile-repo
+         version: vp-rem
       register: git_repo
 
     - name: run maven install
-      command: mvn install
+      command: mvn install -DskipTests
       args:
         chdir: vprofile-repo
       when: git_repo.changed
@@ -35,4 +36,4 @@
     - name: copy sql to files directory
       copy:
         src: vprofile-repo/src/main/resources/db_backup.sql
-        dest: files/db_backup.sql
+        dest: file/db_backup.sql

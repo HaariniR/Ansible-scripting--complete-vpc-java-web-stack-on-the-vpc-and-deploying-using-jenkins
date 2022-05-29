@@ -20,7 +20,6 @@
          content: "{{keystackout.key.private_key}}"
          dest: "./vpcstack_keypair.pem"
          mode: 0600
-      when: keystackout.changed
 
     - name: create ec2 security group for ELB
       ec2_group:
@@ -181,7 +180,8 @@
     - name: copy ec2 instances login key pair
       copy:
         content: vpcstack_keypair.pem
-        dest: provision_stack/vpcstack_keypair.pem
+        dest: vpcstack_keypair.pem
+        mode: 0600
 
     - name: create inventory file with all hosts
       blockinfile:

@@ -119,7 +119,7 @@
           block:
             - name: Deploy vprofile artifact
               copy:
-                src: files/ROOT.war
+                src: file/ROOT.war
                 dest: /usr/local/tomcat8/webapps/ROOT.war
               register: deploy_info
               tags:
