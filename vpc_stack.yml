@@ -55,6 +55,7 @@
     - name: update ec2 security group for instances
       ec2_group:
          name: ec2_sec
+         description: ec2 security group
          vpc_id: "{{vpc_id}}"
          region: "{{region}}"
          rules:
