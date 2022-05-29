@@ -1,0 +1,7 @@
+# BEGIN ANSIBLE MANAGED BLOCK
+web01_private_ip: 172.20.4.184
+app01_private_ip: 172.20.4.33
+rmq01_private_ip: 172.20.4.231
+mc01_private_ip: 172.20.4.88
+db01_private_ip: 172.20.4.84
+# END ANSIBLE MANAGED BLOCK
