@@ -1,0 +1,36 @@
+---
+- name: setup vpc
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Import variables from vpc stack
+      include_vars: vars/vpc_stack
+
+    - name: Import variables from vpc stack
+      include_vars: vars/output_var
+
+    - name: Create ec2 key pair for the stack
+      ec2_key:
+         name: stack_keypair
+         region: "{{region}}"
+      register: keystackout
+
+    - name: create private key file
+      copy:
+         content: "{{keystackout.key.private_key}}"
+         dest: "./vpcstack_keypair.pem"
+         mode: 0600
+      when: keystackout.changed
+
+    - name: create ec2 security group for ELB
+      ec2_group:
+         name: ELB_sec
+         description: ELB security group
+         vpc_id: "{{vpc_id}}"
+         region: "{{region}}"
+         rules:
+           - proto: tcp
+             from_port: 80
+             to_port: 80
+             cidr_ip: 0.0.0.0
+      register: elb_sec_grp

@@ -20,3 +20,8 @@ privsubnet2: "172.20.5.0/24"
 privsubnet3: "172.20.6.0/24"
 
 state: present
+
+#bashion host
+ami_id: "ami-0022f774911c1d690"
+MY_IP: 183.82.178.235/32
+region: "us-east-1"
