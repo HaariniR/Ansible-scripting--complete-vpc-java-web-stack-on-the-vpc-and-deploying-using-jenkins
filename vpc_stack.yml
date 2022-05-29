@@ -41,6 +41,7 @@
          description: ec2 security group
          vpc_id: "{{vpc_id}}"
          region: "{{region}}"
+         purge_rules: no
          rules:
            - proto: tcp
              from_port: 80
@@ -58,6 +59,7 @@
          description: ec2 security group
          vpc_id: "{{vpc_id}}"
          region: "{{region}}"
+         purge_rules: no
          rules:
            - proto: all
              group_id: "{{ec2_sec_grp.group_id}}"
@@ -146,3 +148,22 @@
           Name: "db01"
         group_id: "{{ec2_sec_grp.group_id}}"
       register: db01_instance
+
+    - local_action:
+      module: ec2_elb_lb
+      name: "test-vpc"
+      scheme: internal
+      state: present
+      region: "{{region}}"
+      instance_ids:
+        - "{{web01_instance.tagged_instances[0]}}"
+      security_group_ids: "{{elb_sec_grp.group_id}}"
+      purge_instance_ids: true
+      subnets:
+        - "{{public_sub1}}"
+        - "{{public_sub2}}"
+        - "{{public_sub3}}"
+      listeners:
+        - protocol: http # options are http, https, ssl, tcp
+          load_balancer_port: 80
+          instance_port: 80
