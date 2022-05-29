@@ -1,0 +1,27 @@
+---
+- name: memcache
+  hosts: mcsrvgrp
+  tasks:
+    - name: install memcached
+      apt:
+        name: memcached
+        state: present
+
+    - name: start memcached
+      service:
+        name: memcached
+        state: started
+        enabled: yes
+
+    - name: to enable remote login
+      lineinfile:
+        path: /etc/memcached.conf
+        regexp: '^-l'
+        line: '-l 0.0.0.0'
+      notify:
+         - restartmemcache
+  handlers:
+    - name: restartmemcache
+      service:
+         name: memcached
+         state: restarted

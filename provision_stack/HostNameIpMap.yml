@@ -9,8 +9,9 @@
       blockinfile:
          path: /etc/hosts
          block: |
-              web01
-              app01
-              rmq01
-              mc01
-              db01
+              {{web01_private_ip}} web01
+              {{app01_private_ip}} app01
+              {{rmq01_private_ip}} rmq01
+              {{mc01_private_ip}} mc01
+              {{db01_private_ip}} db01
+

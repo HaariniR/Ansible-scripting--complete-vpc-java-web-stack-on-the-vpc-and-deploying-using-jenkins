@@ -1,0 +1,9 @@
+---
+- import_playbook: build.yml
+- import_playbook: HostNameIpMap.yml
+- import_playbook: db.yml
+- import_playbook: db_deploy.yml
+- import_playbook: memcache.yml
+- import_playbook: nginx.yml
+- import_playbook: rabbitmq.yml
+- import_playbook: tomcat.yml
