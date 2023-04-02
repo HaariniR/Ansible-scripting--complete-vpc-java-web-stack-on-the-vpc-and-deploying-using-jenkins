@@ -68,6 +68,8 @@ o	Tomcat – setup and deploy artifact generated in tomcat. Configure properties
 •	Configure /etc/hosts in all servers by logging in as the bashion host
 
 This will setup a entire web application stack on ansible
+![image](https://user-images.githubusercontent.com/102613218/229354347-4f995ff9-28c5-4110-b4cb-d9bb03d6ad89.png)
+
 
 ![image](https://user-images.githubusercontent.com/102613218/229353829-1e8dc025-dfc1-4c61-b24e-53b55939dc8c.png)
 
